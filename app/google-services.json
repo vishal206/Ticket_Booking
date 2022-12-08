@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "10779526797",
+    "project_id": "plotline-ticket-booking",
+    "storage_bucket": "plotline-ticket-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10779526797:android:14c4ca0cf9fc04815984c4",
+        "android_client_info": {
+          "package_name": "com.example.plotlineticketbooking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10779526797-8ovua6em64g995pviu16s720cd4hmf5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKXrecmXkswsDXmTIPBShurVdX9S1-cfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10779526797-8ovua6em64g995pviu16s720cd4hmf5u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

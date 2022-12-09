@@ -27,12 +27,14 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/bottom_nav_selector"
-        app:itemTextColor="@color/bottom_nav_selector"/>
+        app:itemTextColor="@color/bottom_nav_selector"
+        app:itemIconSize="18dp"
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
+        app:layout_constraintGuide_percent="0.93" />
 </androidx.constraintlayout.widget.ConstraintLayout>

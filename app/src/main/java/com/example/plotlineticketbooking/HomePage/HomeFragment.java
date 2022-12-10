@@ -169,7 +169,9 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> docList = task.getResult().getDocuments();
                 for (DocumentSnapshot doc : docList) {
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false);
+                    ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
+                    ArrayList<String> selected=new ArrayList<>();
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate);
                     comedyShowsList.add(event);
                     Log.d(TAG, "co:" + doc.get("name"));
                 }
@@ -181,7 +183,9 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> docList = task.getResult().getDocuments();
                 for (DocumentSnapshot doc : docList) {
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false);
+                    ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
+                    ArrayList<String> selected=new ArrayList<>();
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate);
                     moviesList.add(event);
                 }
             }
@@ -191,7 +195,9 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> docList = task.getResult().getDocuments();
                 for (DocumentSnapshot doc : docList) {
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false);
+                    ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
+                    ArrayList<String> selected=new ArrayList<>();
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate);
                     playsList.add(event);
                 }
             }

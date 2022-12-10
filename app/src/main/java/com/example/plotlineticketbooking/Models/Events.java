@@ -3,25 +3,36 @@ package com.example.plotlineticketbooking.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Events implements Parcelable {
-    String name,description,category,duration;
-    Boolean isSelected;
+import java.util.ArrayList;
 
-    public Events(String name, String description, String category, String duration,Boolean isSelected) {
+public class Events implements Parcelable {
+    String name,description,category,duration,showDate;
+    Boolean isSelected;
+    ArrayList<String> bookedSeats,selectedSeats;
+
+
+    public Events(String name, String description, String category, String duration,Boolean isSelected,ArrayList<String> bookedSeats,ArrayList<String> selectedSeats,String showDate) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.duration = duration;
         this.isSelected=isSelected;
+        this.bookedSeats=bookedSeats;
+        this.selectedSeats=selectedSeats;
+        this.showDate=showDate;
     }
+
 
     protected Events(Parcel in) {
         name = in.readString();
         description = in.readString();
         category = in.readString();
         duration = in.readString();
+        showDate = in.readString();
         byte tmpIsSelected = in.readByte();
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
+        bookedSeats = in.createStringArrayList();
+        selectedSeats = in.createStringArrayList();
     }
 
     public static final Creator<Events> CREATOR = new Creator<Events>() {
@@ -35,6 +46,30 @@ public class Events implements Parcelable {
             return new Events[size];
         }
     };
+
+    public String getShowDate() {
+        return showDate;
+    }
+
+    public void setShowDate(String showDate) {
+        this.showDate = showDate;
+    }
+
+    public ArrayList<String> getBookedSeats() {
+        return bookedSeats;
+    }
+
+    public void setBookedSeats(ArrayList<String> bookedSeats) {
+        this.bookedSeats = bookedSeats;
+    }
+
+    public ArrayList<String> getSelectedSeats() {
+        return selectedSeats;
+    }
+
+    public void setSelectedSeats(ArrayList<String> selectedSeats) {
+        this.selectedSeats = selectedSeats;
+    }
 
     public Boolean getSelected() {
         return isSelected;
@@ -87,6 +122,9 @@ public class Events implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(category);
         parcel.writeString(duration);
+        parcel.writeString(showDate);
         parcel.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
+        parcel.writeStringList(bookedSeats);
+        parcel.writeStringList(selectedSeats);
     }
 }

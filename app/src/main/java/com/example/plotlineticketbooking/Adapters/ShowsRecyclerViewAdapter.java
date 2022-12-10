@@ -1,6 +1,7 @@
 package com.example.plotlineticketbooking.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
                 events.setSelected(false);
             }
         });
+        Log.d("booked", ":"+events.getBookedSeats().size());
     }
 
     @Override

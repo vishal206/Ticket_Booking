@@ -6,12 +6,12 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Events implements Parcelable {
-    String name,description,category,duration,showDate;
+    String name,description,category,duration,showDate,firebaseDocName;
     Boolean isSelected;
     ArrayList<String> bookedSeats,selectedSeats;
 
 
-    public Events(String name, String description, String category, String duration,Boolean isSelected,ArrayList<String> bookedSeats,ArrayList<String> selectedSeats,String showDate) {
+    public Events(String name, String description, String category, String duration,Boolean isSelected,ArrayList<String> bookedSeats,ArrayList<String> selectedSeats,String showDate,String firebaseDocName) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -20,6 +20,7 @@ public class Events implements Parcelable {
         this.bookedSeats=bookedSeats;
         this.selectedSeats=selectedSeats;
         this.showDate=showDate;
+        this.firebaseDocName=firebaseDocName;
     }
 
 
@@ -29,6 +30,7 @@ public class Events implements Parcelable {
         category = in.readString();
         duration = in.readString();
         showDate = in.readString();
+        firebaseDocName = in.readString();
         byte tmpIsSelected = in.readByte();
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
         bookedSeats = in.createStringArrayList();
@@ -46,6 +48,14 @@ public class Events implements Parcelable {
             return new Events[size];
         }
     };
+
+    public String getFirebaseDocName() {
+        return firebaseDocName;
+    }
+
+    public void setFirebaseDocName(String firebaseDocName) {
+        this.firebaseDocName = firebaseDocName;
+    }
 
     public String getShowDate() {
         return showDate;
@@ -123,6 +133,7 @@ public class Events implements Parcelable {
         parcel.writeString(category);
         parcel.writeString(duration);
         parcel.writeString(showDate);
+        parcel.writeString(firebaseDocName);
         parcel.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
         parcel.writeStringList(bookedSeats);
         parcel.writeStringList(selectedSeats);

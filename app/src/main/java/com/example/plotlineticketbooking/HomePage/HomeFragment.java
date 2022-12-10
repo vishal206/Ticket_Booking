@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                 for (DocumentSnapshot doc : docList) {
                     ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
                     ArrayList<String> selected=new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate);
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate,doc.getId());
                     comedyShowsList.add(event);
                     Log.d(TAG, "co:" + doc.get("name"));
                 }
@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                 for (DocumentSnapshot doc : docList) {
                     ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
                     ArrayList<String> selected=new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate);
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate,doc.getId());
                     moviesList.add(event);
                 }
             }
@@ -197,7 +197,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                 for (DocumentSnapshot doc : docList) {
                     ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
                     ArrayList<String> selected=new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate);
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate,doc.getId());
                     playsList.add(event);
                 }
             }

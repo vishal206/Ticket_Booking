@@ -70,6 +70,7 @@ public class ReceiptActivity extends AppCompatActivity {
     private void updateFirestore() {
         for (int i = 0; i < selectedEvents.size(); i++) {
             for (int j = 0; j < selectedEvents.get(i).getSelectedSeats().size(); j++) {
+
                 firestore.collection("events").document(selectedDate).collection(selectedEvents.get(i).getCategory()).document(selectedEvents.get(i).getFirebaseDocName())
                         .update("booked", FieldValue.arrayUnion(selectedEvents.get(i).getSelectedSeats().get(j))).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -84,6 +85,7 @@ public class ReceiptActivity extends AppCompatActivity {
                         });
             }
             if (selectedEvents.get(i).getSelectedSeats().size() != 0) {
+                selectedEvents.get(i).setTimestamp(FieldValue.serverTimestamp().toString());
                 firestore.collection("users").document(mUser.getUid()).collection("bookedEvents")
                         .add(selectedEvents.get(i)).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override

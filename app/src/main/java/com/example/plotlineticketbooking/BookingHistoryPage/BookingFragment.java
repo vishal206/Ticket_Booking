@@ -50,6 +50,7 @@ public class BookingFragment extends Fragment {
 
     private void getBookedEvents() {
         firestore.collection("users").document(mUser.getUid()).collection("bookedEvents")
+                .orderBy("timestamp")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Events implements Parcelable {
-    String name, description, category, duration, showDate, firebaseDocName;
+    String name, description, category, duration, showDate, firebaseDocName,timestamp;
     Boolean isSelected;
     ArrayList<String> bookedSeats, selectedSeats;
 
@@ -35,6 +35,14 @@ public class Events implements Parcelable {
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
         bookedSeats = in.createStringArrayList();
         selectedSeats = in.createStringArrayList();
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public static final Creator<Events> CREATOR = new Creator<Events>() {

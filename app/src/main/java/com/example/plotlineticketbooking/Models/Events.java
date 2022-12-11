@@ -6,12 +6,12 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Events implements Parcelable {
-    String name, description, category, duration, showDate, firebaseDocName,timestamp;
+    String name, description, category, duration, showDate, firebaseDocName,timestamp,bookedDocName;
     Boolean isSelected;
     ArrayList<String> bookedSeats, selectedSeats;
 
 
-    public Events(String name, String description, String category, String duration, Boolean isSelected, ArrayList<String> bookedSeats, ArrayList<String> selectedSeats, String showDate, String firebaseDocName) {
+    public Events(String name, String description, String category, String duration, Boolean isSelected, ArrayList<String> bookedSeats, ArrayList<String> selectedSeats, String showDate, String firebaseDocName,String bookedDocName) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -21,6 +21,7 @@ public class Events implements Parcelable {
         this.selectedSeats = selectedSeats;
         this.showDate = showDate;
         this.firebaseDocName = firebaseDocName;
+        this.bookedDocName=bookedDocName;
     }
 
 
@@ -31,18 +32,12 @@ public class Events implements Parcelable {
         duration = in.readString();
         showDate = in.readString();
         firebaseDocName = in.readString();
+        timestamp = in.readString();
+        bookedDocName = in.readString();
         byte tmpIsSelected = in.readByte();
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
         bookedSeats = in.createStringArrayList();
         selectedSeats = in.createStringArrayList();
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
     public static final Creator<Events> CREATOR = new Creator<Events>() {
@@ -63,6 +58,22 @@ public class Events implements Parcelable {
 
     public void setFirebaseDocName(String firebaseDocName) {
         this.firebaseDocName = firebaseDocName;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getBookedDocName() {
+        return bookedDocName;
+    }
+
+    public void setBookedDocName(String bookedDocName) {
+        this.bookedDocName = bookedDocName;
     }
 
     public String getShowDate() {
@@ -130,6 +141,7 @@ public class Events implements Parcelable {
         this.duration = duration;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -143,6 +155,8 @@ public class Events implements Parcelable {
         parcel.writeString(duration);
         parcel.writeString(showDate);
         parcel.writeString(firebaseDocName);
+        parcel.writeString(timestamp);
+        parcel.writeString(bookedDocName);
         parcel.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
         parcel.writeStringList(bookedSeats);
         parcel.writeStringList(selectedSeats);

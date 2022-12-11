@@ -83,7 +83,7 @@
         android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingVertical="8dp">
+        android:paddingVertical="4dp">
 
         <TextView
             android:id="@+id/bookingStatus"
@@ -98,13 +98,15 @@
             android:textColor="@color/primaryButtonTextColor"
             android:textSize="14sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancelBooking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/roboto_light"
-            android:text="Hope you enjoy the show!"
-            android:textColor="@color/textColor"
-            android:textSize="14sp" />
+            android:layout_weight="1"
+            android:background="@drawable/list_secondary_custom_button"
+            android:text="Cancel Booking"
+            android:textAllCaps="false"
+            android:textColor="@color/textColor"/>
 
     </LinearLayout>
 

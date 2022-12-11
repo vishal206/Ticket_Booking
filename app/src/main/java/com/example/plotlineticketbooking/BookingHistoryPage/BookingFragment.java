@@ -48,7 +48,7 @@ public class BookingFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_booking, container, false);
 
         initializeViews();
-        getBookedEvents();
+        getBookedEvents("normal");
 
         btnAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class BookingFragment extends Fragment {
                 btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
-                setRecyclerView("normal");
+                getBookedEvents("normal");
             }
         });
 
@@ -76,7 +76,7 @@ public class BookingFragment extends Fragment {
                 btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
-                setRecyclerView("comedy_shows");
+                getBookedEvents("comedy_shows");
             }
         });
         btnMovies.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class BookingFragment extends Fragment {
                 btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
-                setRecyclerView("movies");
+                getBookedEvents("movies");
             }
         });
         btnPlays.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class BookingFragment extends Fragment {
                 btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
                 btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
-                setRecyclerView("plays");
+                getBookedEvents("plays");
             }
         });
 
@@ -112,6 +112,9 @@ public class BookingFragment extends Fragment {
     }
 
     private void setFilterEvents() {
+        comedyShowsList.clear();
+        moviesList.clear();
+        playsList.clear();
         for(int i=0;i<bookedEvents.size();i++){
             if(bookedEvents.get(i).getCategory().equals("comedy_shows")){
                 comedyShowsList.add(bookedEvents.get(i));
@@ -123,7 +126,8 @@ public class BookingFragment extends Fragment {
         }
     }
 
-    private void getBookedEvents() {
+    private void getBookedEvents(String selectedShow) {
+        bookedEvents.clear();
         firestore.collection("users").document(mUser.getUid()).collection("bookedEvents")
                 .orderBy("timestamp")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -135,11 +139,11 @@ public class BookingFragment extends Fragment {
                             ArrayList<String> selected = (ArrayList<String>) doc.get("selectedSeats");
                             Events events = new Events(doc.get("name").toString(), doc.get("description").toString(),
                                     doc.get("category").toString(), doc.get("duration").toString(),
-                                    false, booked, selected, doc.get("showDate").toString(), doc.getId());
+                                    false, booked, selected, doc.get("showDate").toString(), doc.get("firebaseDocName").toString(),doc.getId());
                             bookedEvents.add(events);
                         }
                         setFilterEvents();
-                        setRecyclerView("normal");
+                        setRecyclerView(selectedShow);
                     }
                 });
     }

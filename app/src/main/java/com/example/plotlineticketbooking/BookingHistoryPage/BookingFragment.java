@@ -3,6 +3,7 @@ package com.example.plotlineticketbooking.BookingHistoryPage;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.plotlineticketbooking.Adapters.ReceiptAdapter;
 import com.example.plotlineticketbooking.Models.Events;
@@ -33,9 +35,11 @@ public class BookingFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     ArrayList<Events> bookedEvents;
+    ArrayList<Events> comedyShowsList, playsList, moviesList;
     RecyclerView showsRecyclerView;
     ReceiptAdapter receiptAdapter;
     View view;
+    Button btnComedyShows, btnMovies, btnPlays, btnAll;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +49,78 @@ public class BookingFragment extends Fragment {
 
         initializeViews();
         getBookedEvents();
+
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.primary_custom_button));
+                btnAll.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
+                btnComedyShows.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnMovies.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnPlays.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                setRecyclerView("normal");
+            }
+        });
+
+        btnComedyShows.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnAll.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnComedyShows.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.primary_custom_button));
+                btnMovies.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnPlays.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
+                setRecyclerView("comedy_shows");
+            }
+        });
+        btnMovies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnAll.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnMovies.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.primary_custom_button));
+                btnComedyShows.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnPlays.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
+                setRecyclerView("movies");
+            }
+        });
+        btnPlays.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnAll.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnPlays.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.primary_custom_button));
+                btnComedyShows.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnMovies.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.secondary_custom_button));
+                btnComedyShows.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnMovies.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryButtonTextColor));
+                btnPlays.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryButtonTextColor));
+                setRecyclerView("plays");
+            }
+        });
+
         return view;
+    }
+
+    private void setFilterEvents() {
+        for(int i=0;i<bookedEvents.size();i++){
+            if(bookedEvents.get(i).getCategory().equals("comedy_shows")){
+                comedyShowsList.add(bookedEvents.get(i));
+            }else if(bookedEvents.get(i).getCategory().equals("movies")){
+                moviesList.add(bookedEvents.get(i));
+            }else if(bookedEvents.get(i).getCategory().equals("plays")){
+                playsList.add(bookedEvents.get(i));
+            }
+        }
     }
 
     private void getBookedEvents() {
@@ -63,13 +138,24 @@ public class BookingFragment extends Fragment {
                                     false, booked, selected, doc.get("showDate").toString(), doc.getId());
                             bookedEvents.add(events);
                         }
-                        setRecyclerView();
+                        setFilterEvents();
+                        setRecyclerView("normal");
                     }
                 });
     }
 
-    private void setRecyclerView() {
-        receiptAdapter = new ReceiptAdapter(getContext(), bookedEvents);
+    private void setRecyclerView(String selectedShow) {
+        ArrayList<Events> showList = new ArrayList<>();
+        if (selectedShow.equals("comedy_shows")) {
+            showList = comedyShowsList;
+        } else if (selectedShow.equals("movies")) {
+            showList = moviesList;
+        } else if (selectedShow.equals("plays")) {
+            showList = playsList;
+        }else{
+            showList=bookedEvents;
+        }
+        receiptAdapter = new ReceiptAdapter(getContext(), showList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         showsRecyclerView.setLayoutManager(layoutManager);
         showsRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -82,5 +168,12 @@ public class BookingFragment extends Fragment {
         mUser = mAuth.getCurrentUser();
         showsRecyclerView = view.findViewById(R.id.showsRecyclerView);
         bookedEvents = new ArrayList<>();
+        btnComedyShows = view.findViewById(R.id.btnComedyShows);
+        btnMovies = view.findViewById(R.id.btnMovies);
+        btnPlays = view.findViewById(R.id.btnPlays);
+        comedyShowsList = new ArrayList<>();
+        playsList = new ArrayList<>();
+        moviesList = new ArrayList<>();
+        btnAll=view.findViewById(R.id.btnAll);
     }
 }

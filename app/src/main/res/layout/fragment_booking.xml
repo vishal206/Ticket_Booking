@@ -20,6 +20,58 @@
         app:layout_constraintStart_toStartOf="@+id/guideline25"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline32"
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintStart_toStartOf="@+id/guideline25"
+        app:layout_constraintTop_toTopOf="@+id/guideline30">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/primary_custom_button"
+            android:text="All"
+            android:textAllCaps="false"
+            android:textColor="@color/primaryButtonTextColor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnComedyShows"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_custom_button"
+            android:text="Comedy Show"
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryButtonTextColor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPlays"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_custom_button"
+            android:text="Plays"
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryButtonTextColor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMovies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_custom_button"
+            android:text="Movies"
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryButtonTextColor" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/showsRecyclerView"
         android:layout_width="0dp"
@@ -27,7 +79,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline26"
         app:layout_constraintStart_toStartOf="@+id/guideline25"
-        app:layout_constraintTop_toTopOf="@+id/guideline24"
+        app:layout_constraintTop_toTopOf="@+id/guideline31"
         tools:listitem="@layout/booked_shows_list" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -36,6 +88,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.13" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline27"

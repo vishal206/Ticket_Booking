@@ -34,17 +34,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.checkerframework.checker.units.qual.A;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
 public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     View view;
-    EditText date;
+    EditText dateEditText;
     String selectedDate, TAG = "Hfrag";
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -59,12 +62,18 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         initializeViews();
-        date.setOnClickListener(new View.OnClickListener() {
+        dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDailog();
             }
         });
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date=new Date();
+        selectedDate=formatter.format(date);
+        dateEditText.setText(selectedDate);
+        getEvents();
+
         btnComedyShows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,7 +141,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
 
 
     private void initializeViews() {
-        date = view.findViewById(R.id.et_date);
+        dateEditText = view.findViewById(R.id.et_date);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         comedyShowsList = new ArrayList<>();
@@ -159,11 +168,14 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         month++;
         selectedDate = dayOfMonth + "-" + month + "-" + year;
-        date.setText(selectedDate);
+        dateEditText.setText(selectedDate);
         getEvents();
     }
 
     private void getEvents() {
+        comedyShowsList.clear();
+        moviesList.clear();
+        playsList.clear();
         firestore.collection("events").document(selectedDate).collection("comedy_shows").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

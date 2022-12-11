@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                             Map<String,Object> userInfo=new HashMap<>();
                             userInfo.put("name",account.getDisplayName());
                             userInfo.put("email",account.getEmail());
+                            userInfo.put("profilePic",account.getPhotoUrl());
                             db.collection("users").document(uid).set(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull  Task<Void> task) {

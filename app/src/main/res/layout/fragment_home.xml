@@ -31,6 +31,8 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -77,6 +79,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:listitem="@layout/shows_list"
+        app:layout_constraintBottom_toTopOf="@+id/guideline16"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline15" />
+
+    <TextView
+        android:id="@+id/textNotAvailable"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Shows Not Available on this day \n ( try 9-11-2022 )"
+        android:textColor="@color/textColor"
+        android:textSize="20dp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"

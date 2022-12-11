@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.plotlineticketbooking.Adapters.ShowsRecyclerViewAdapter;
 import com.example.plotlineticketbooking.Models.Events;
@@ -56,6 +58,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
     RecyclerView showsRecyclerView;
     ShowsRecyclerViewAdapter showsRecyclerViewAdapter;
     Button btnComedyShows, btnMovies, btnPlays, btnBookTicket;
+    TextView textNotAvailable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,8 +72,8 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             }
         });
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date date=new Date();
-        selectedDate=formatter.format(date);
+        Date date = new Date();
+        selectedDate = formatter.format(date);
         dateEditText.setText(selectedDate);
         getEvents();
 
@@ -113,27 +116,32 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
         btnBookTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Events> selectedEvents=new ArrayList<>();
-                for(int i=0;i<comedyShowsList.size();i++){
-                    if(comedyShowsList.get(i).getSelected()){
+                ArrayList<Events> selectedEvents = new ArrayList<>();
+                for (int i = 0; i < comedyShowsList.size(); i++) {
+                    if (comedyShowsList.get(i).getSelected()) {
                         selectedEvents.add(comedyShowsList.get(i));
                     }
                 }
-                for(int i=0;i<moviesList.size();i++){
-                    if(moviesList.get(i).getSelected()){
+                for (int i = 0; i < moviesList.size(); i++) {
+                    if (moviesList.get(i).getSelected()) {
                         selectedEvents.add(moviesList.get(i));
                     }
                 }
-                for(int i=0;i<playsList.size();i++){
-                    if(playsList.get(i).getSelected()){
+                for (int i = 0; i < playsList.size(); i++) {
+                    if (playsList.get(i).getSelected()) {
                         selectedEvents.add(playsList.get(i));
                     }
                 }
-                Intent intent=new Intent(getContext(),SelectSeatActivity.class);
-                Bundle args = new Bundle();
-                args.putSerializable("ARRAYLIST",(Serializable)selectedEvents);
-                intent.putExtra("BUNDLE",args);
-                startActivity(intent);
+                if (selectedEvents.size() > 0) {
+                    Intent intent = new Intent(getContext(), SelectSeatActivity.class);
+                    Bundle args = new Bundle();
+                    args.putSerializable("ARRAYLIST", (Serializable) selectedEvents);
+                    intent.putExtra("BUNDLE", args);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "Select a Show", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         return view;
@@ -152,6 +160,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
         btnMovies = view.findViewById(R.id.btnMovies);
         btnPlays = view.findViewById(R.id.btnPlays);
         btnBookTicket = view.findViewById(R.id.btnBookTicket);
+        textNotAvailable = view.findViewById(R.id.textNotAvailable);
     }
 
     private void showDatePickerDailog() {
@@ -181,9 +190,9 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> docList = task.getResult().getDocuments();
                 for (DocumentSnapshot doc : docList) {
-                    ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
-                    ArrayList<String> selected=new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate,doc.getId());
+                    ArrayList<String> booked = (ArrayList<String>) doc.get("booked");
+                    ArrayList<String> selected = new ArrayList<>();
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId());
                     comedyShowsList.add(event);
                     Log.d(TAG, "co:" + doc.get("name"));
                 }
@@ -195,9 +204,9 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> docList = task.getResult().getDocuments();
                 for (DocumentSnapshot doc : docList) {
-                    ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
-                    ArrayList<String> selected=new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate,doc.getId());
+                    ArrayList<String> booked = (ArrayList<String>) doc.get("booked");
+                    ArrayList<String> selected = new ArrayList<>();
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId());
                     moviesList.add(event);
                 }
             }
@@ -207,9 +216,9 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> docList = task.getResult().getDocuments();
                 for (DocumentSnapshot doc : docList) {
-                    ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
-                    ArrayList<String> selected=new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false,booked,selected,selectedDate,doc.getId());
+                    ArrayList<String> booked = (ArrayList<String>) doc.get("booked");
+                    ArrayList<String> selected = new ArrayList<>();
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId());
                     playsList.add(event);
                 }
             }
@@ -226,10 +235,18 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
         } else if (selectedShow.equals("plays")) {
             showList = playsList;
         }
-        showsRecyclerViewAdapter = new ShowsRecyclerViewAdapter(getContext(), showList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        showsRecyclerView.setLayoutManager(layoutManager);
-        showsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        showsRecyclerView.setAdapter(showsRecyclerViewAdapter);
+        if(showList.size()==0){
+            textNotAvailable.setVisibility(View.VISIBLE);
+            showsRecyclerView.setVisibility(View.GONE);
+        }else{
+            textNotAvailable.setVisibility(View.GONE);
+            showsRecyclerView.setVisibility(View.VISIBLE);
+            showsRecyclerViewAdapter = new ShowsRecyclerViewAdapter(getContext(), showList);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            showsRecyclerView.setLayoutManager(layoutManager);
+            showsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            showsRecyclerView.setAdapter(showsRecyclerViewAdapter);
+        }
+
     }
 }

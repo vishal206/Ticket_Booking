@@ -1,4 +1,4 @@
-package com.example.plotlineticketbooking.BookingPage;
+package com.example.plotlineticketbooking.BookingHistoryPage;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.plotlineticketbooking.Adapters.ReceiptAdapter;
-import com.example.plotlineticketbooking.HomePage.ReceiptActivity;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
 import com.google.android.gms.tasks.OnCompleteListener;

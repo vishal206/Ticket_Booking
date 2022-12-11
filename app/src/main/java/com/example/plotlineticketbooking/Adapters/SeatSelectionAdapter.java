@@ -1,5 +1,6 @@
 package com.example.plotlineticketbooking.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class SeatSelectionAdapter extends BaseAdapter {
             btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.booked_seat_button));
         }
         if(selectedSeats.contains(seats.getName())){
+            seats.setSelected(true);
             btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.selected_seat_button));
         }
         btnSeat.setOnClickListener(new View.OnClickListener() {
@@ -71,15 +73,19 @@ public class SeatSelectionAdapter extends BaseAdapter {
             public void onClick(View view) {
                 if(!seats.getBooked()){
                     if(seats.getSelected()){
-                        ArrayList<String> selected=events.getSelectedSeats();
-                        selected.remove(seats.getName());
-                        events.setSelectedSeats(selected);
+//                        ArrayList<String> selected=events.getSelectedSeats();
+//                        selected.remove(seats.getName());
+//                        events.setSelectedSeats(selected);
+                        events.getSelectedSeats().remove(seats.getName());
+                        Log.d("seSel", ":"+events.getSelectedSeats().toString()+"-"+seats.getName());
                         seats.setSelected(false);
                         btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.unselected_seat_button));
                     }else{
-                        ArrayList<String> selected=events.getSelectedSeats();
-                        selected.add(seats.getName());
-                        events.setSelectedSeats(selected);
+//                        ArrayList<String> selected=events.getSelectedSeats();
+//                        selected.add(seats.getName());
+//                        events.setSelectedSeats(selected);
+                        events.getSelectedSeats().add(seats.getName());
+                        Log.d("seSel2", ":"+events.getSelectedSeats().toString());
                         seats.setSelected(true);
                         btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.selected_seat_button));
                     }

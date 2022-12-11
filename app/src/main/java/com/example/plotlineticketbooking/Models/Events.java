@@ -78,6 +78,7 @@ public class Events implements Parcelable {
     }
 
     public void setSelectedSeats(ArrayList<String> selectedSeats) {
+
         this.selectedSeats = selectedSeats;
     }
 

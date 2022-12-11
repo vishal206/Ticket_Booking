@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.plotlineticketbooking.BookingPage.BookingFragment;
+import com.example.plotlineticketbooking.BookingHistoryPage.BookingFragment;
 import com.example.plotlineticketbooking.HomePage.HomeFragment;
 import com.example.plotlineticketbooking.ProfilePage.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

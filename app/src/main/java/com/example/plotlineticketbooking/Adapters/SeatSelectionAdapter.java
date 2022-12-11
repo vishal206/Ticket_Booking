@@ -21,14 +21,15 @@ public class SeatSelectionAdapter extends BaseAdapter {
     ArrayList<Seats> seatsArrayList;
     Context context;
     LayoutInflater inflater;
-    ArrayList<String> bookedSeats;
+    ArrayList<String> bookedSeats,selectedSeats;
     Events events;
 
-    public SeatSelectionAdapter(ArrayList<Seats> seatsArrayList, Context context,ArrayList<String> bookedSeats,Events events) {
+    public SeatSelectionAdapter(ArrayList<Seats> seatsArrayList, Context context,ArrayList<String> bookedSeats,Events events,ArrayList<String> selectedSeats) {
         this.seatsArrayList = seatsArrayList;
         this.context = context;
         this.bookedSeats=bookedSeats;
         this.events= events;
+        this.selectedSeats=selectedSeats;
     }
 
 
@@ -62,7 +63,7 @@ public class SeatSelectionAdapter extends BaseAdapter {
             seats.setBooked(true);
             btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.booked_seat_button));
         }
-        if(seats.getSelected()){
+        if(selectedSeats.contains(seats.getName())){
             btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.selected_seat_button));
         }
         btnSeat.setOnClickListener(new View.OnClickListener() {

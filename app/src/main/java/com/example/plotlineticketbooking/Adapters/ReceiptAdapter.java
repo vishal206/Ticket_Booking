@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,6 +58,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
         holder.showTickets.setText(selectedSeats.size() + " tickets:" + seatName);
         holder.bookingStatus.setText("Booked");
         holder.showDate.setText(events.getShowDate());
+        Glide.with(context).load(events.getShowPic()).into(holder.showImage);
 
         holder.btnCancelBooking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +122,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
     public static class Viewholder extends RecyclerView.ViewHolder {
         TextView showName, showTickets, bookingStatus, showDate;
         Button btnCancelBooking;
+        ImageView showImage;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +131,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
             showDate = itemView.findViewById(R.id.showDate);
             showTickets = itemView.findViewById(R.id.showTickets);
             btnCancelBooking=itemView.findViewById(R.id.btnCancelBooking);
+            showImage=itemView.findViewById(R.id.showImage);
         }
     }
 }

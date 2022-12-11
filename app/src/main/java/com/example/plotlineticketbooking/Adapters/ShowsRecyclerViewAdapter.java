@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
 
@@ -41,6 +43,7 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
             holder.btnRemove.setVisibility(View.VISIBLE);
         }
         holder.showName.setText(events.getName());
+        Glide.with(context).load(events.getShowPic()).into(holder.showImage);
         holder.btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,13 +72,14 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
 
         Button btnSelect, btnRemove;
         TextView showName, learnMore;
-
+        ImageView showImage;
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             btnSelect = itemView.findViewById(R.id.btnSelect);
             btnRemove = itemView.findViewById(R.id.btnRemove);
             showName = itemView.findViewById(R.id.showName);
             learnMore = itemView.findViewById(R.id.learnMore);
+            showImage=itemView.findViewById(R.id.showImage);
         }
     }
 }

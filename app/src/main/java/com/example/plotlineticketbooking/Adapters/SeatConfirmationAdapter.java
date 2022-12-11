@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
 
@@ -46,6 +48,7 @@ public class SeatConfirmationAdapter extends RecyclerView.Adapter<SeatConfirmati
         holder.showTickets.setText(selectedSeats.size() + " tickets:" + seatName);
         holder.ticketPrice.setText("Rs " + selectedSeats.size() * 100);//Assuming one ticket is 100Rs for all shows and seats
         holder.showDate.setText(events.getShowDate());
+        Glide.with(context).load(events.getShowPic()).into(holder.showImage);
     }
 
     @Override
@@ -55,6 +58,7 @@ public class SeatConfirmationAdapter extends RecyclerView.Adapter<SeatConfirmati
 
     public static class Viewholder extends RecyclerView.ViewHolder {
         TextView showName, showTickets, ticketPrice, showDate;
+        ImageView showImage;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +66,7 @@ public class SeatConfirmationAdapter extends RecyclerView.Adapter<SeatConfirmati
             showTickets = itemView.findViewById(R.id.showTickets);
             ticketPrice = itemView.findViewById(R.id.ticketPrice);
             showDate = itemView.findViewById(R.id.showDate);
+            showImage=itemView.findViewById(R.id.showImage);
         }
     }
 }

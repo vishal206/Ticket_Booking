@@ -207,7 +207,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                 for (DocumentSnapshot doc : docList) {
                     ArrayList<String> booked = (ArrayList<String>) doc.get("booked");
                     ArrayList<String> selected = new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId(),"");
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId(),"",doc.get("showPic").toString());
                     comedyShowsList.add(event);
                     Log.d(TAG, "co:" + doc.get("name"));
                 }
@@ -221,7 +221,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                 for (DocumentSnapshot doc : docList) {
                     ArrayList<String> booked = (ArrayList<String>) doc.get("booked");
                     ArrayList<String> selected = new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId(),"");
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId(),"",doc.get("showPic").toString());
                     moviesList.add(event);
                 }
             }
@@ -233,7 +233,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
                 for (DocumentSnapshot doc : docList) {
                     ArrayList<String> booked = (ArrayList<String>) doc.get("booked");
                     ArrayList<String> selected = new ArrayList<>();
-                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId(),"");
+                    Events event = new Events(doc.get("name").toString(), doc.get("description").toString(), doc.get("category").toString(), doc.get("duration").toString(), false, booked, selected, selectedDate, doc.getId(),"",doc.get("showPic").toString());
                     playsList.add(event);
                 }
             }

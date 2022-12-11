@@ -139,7 +139,7 @@ public class BookingFragment extends Fragment {
                             ArrayList<String> selected = (ArrayList<String>) doc.get("selectedSeats");
                             Events events = new Events(doc.get("name").toString(), doc.get("description").toString(),
                                     doc.get("category").toString(), doc.get("duration").toString(),
-                                    false, booked, selected, doc.get("showDate").toString(), doc.get("firebaseDocName").toString(),doc.getId());
+                                    false, booked, selected, doc.get("showDate").toString(), doc.get("firebaseDocName").toString(),doc.getId(),doc.get("showPic").toString());
                             bookedEvents.add(events);
                         }
                         setFilterEvents();

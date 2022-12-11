@@ -9,9 +9,11 @@ public class Events implements Parcelable {
     String name, description, category, duration, showDate, firebaseDocName,timestamp,bookedDocName;
     Boolean isSelected;
     ArrayList<String> bookedSeats, selectedSeats;
+    String showPic;
 
 
-    public Events(String name, String description, String category, String duration, Boolean isSelected, ArrayList<String> bookedSeats, ArrayList<String> selectedSeats, String showDate, String firebaseDocName,String bookedDocName) {
+    public Events(String name, String description, String category, String duration, Boolean isSelected, ArrayList<String> bookedSeats, ArrayList<String> selectedSeats, String showDate, String firebaseDocName,
+                  String bookedDocName,String showPic) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -22,8 +24,8 @@ public class Events implements Parcelable {
         this.showDate = showDate;
         this.firebaseDocName = firebaseDocName;
         this.bookedDocName=bookedDocName;
+        this.showPic=showPic;
     }
-
 
     protected Events(Parcel in) {
         name = in.readString();
@@ -38,6 +40,7 @@ public class Events implements Parcelable {
         isSelected = tmpIsSelected == 0 ? null : tmpIsSelected == 1;
         bookedSeats = in.createStringArrayList();
         selectedSeats = in.createStringArrayList();
+        showPic = in.readString();
     }
 
     public static final Creator<Events> CREATOR = new Creator<Events>() {
@@ -51,6 +54,14 @@ public class Events implements Parcelable {
             return new Events[size];
         }
     };
+
+    public String getShowPic() {
+        return showPic;
+    }
+
+    public void setShowPic(String showPic) {
+        this.showPic = showPic;
+    }
 
     public String getFirebaseDocName() {
         return firebaseDocName;
@@ -160,5 +171,6 @@ public class Events implements Parcelable {
         parcel.writeByte((byte) (isSelected == null ? 0 : isSelected ? 1 : 2));
         parcel.writeStringList(bookedSeats);
         parcel.writeStringList(selectedSeats);
+        parcel.writeString(showPic);
     }
 }

@@ -6,21 +6,21 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Events implements Parcelable {
-    String name,description,category,duration,showDate,firebaseDocName;
+    String name, description, category, duration, showDate, firebaseDocName;
     Boolean isSelected;
-    ArrayList<String> bookedSeats,selectedSeats;
+    ArrayList<String> bookedSeats, selectedSeats;
 
 
-    public Events(String name, String description, String category, String duration,Boolean isSelected,ArrayList<String> bookedSeats,ArrayList<String> selectedSeats,String showDate,String firebaseDocName) {
+    public Events(String name, String description, String category, String duration, Boolean isSelected, ArrayList<String> bookedSeats, ArrayList<String> selectedSeats, String showDate, String firebaseDocName) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.duration = duration;
-        this.isSelected=isSelected;
-        this.bookedSeats=bookedSeats;
-        this.selectedSeats=selectedSeats;
-        this.showDate=showDate;
-        this.firebaseDocName=firebaseDocName;
+        this.isSelected = isSelected;
+        this.bookedSeats = bookedSeats;
+        this.selectedSeats = selectedSeats;
+        this.showDate = showDate;
+        this.firebaseDocName = firebaseDocName;
     }
 
 

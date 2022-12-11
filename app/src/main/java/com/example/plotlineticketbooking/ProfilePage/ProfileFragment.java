@@ -42,16 +42,17 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    TextView userName,userEmail;
+    TextView userName, userEmail;
     View view;
     Button btnLogout;
     String profileURL;
     ImageView profileImage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
         initializeViews();
         setUserDetail();
 
@@ -74,7 +75,7 @@ public class ProfileFragment extends Fragment {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 userName.setText(task.getResult().get("name").toString());
                 userEmail.setText(task.getResult().get("email").toString());
-                profileURL=task.getResult().get("profilePic").toString();
+                profileURL = task.getResult().get("profilePic").toString();
 
                 Glide.with(getContext()).load(profileURL).into(profileImage);
             }
@@ -84,10 +85,10 @@ public class ProfileFragment extends Fragment {
     private void initializeViews() {
         firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        mUser=mAuth.getCurrentUser();
-        userName=view.findViewById(R.id.userName);
-        userEmail=view.findViewById(R.id.userEmail);
-        btnLogout=view.findViewById(R.id.btnLogout);
-        profileImage=view.findViewById(R.id.profileImage);
+        mUser = mAuth.getCurrentUser();
+        userName = view.findViewById(R.id.userName);
+        userEmail = view.findViewById(R.id.userEmail);
+        btnLogout = view.findViewById(R.id.btnLogout);
+        profileImage = view.findViewById(R.id.profileImage);
     }
 }

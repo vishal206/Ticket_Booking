@@ -41,8 +41,9 @@ public class ReceiptActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     String selectedDate;
-    String TAG="RecAc";
+    String TAG = "RecAc";
     Button btnDone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +53,14 @@ public class ReceiptActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
         selectedEvents = (ArrayList<Events>) args.getSerializable("ARRAYLIST");
-        selectedDate=selectedEvents.get(0).getShowDate();
+        selectedDate = selectedEvents.get(0).getShowDate();
         setRecyclerView();
         updateFirestore();
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in=new Intent(ReceiptActivity.this, MainActivity.class);
+                Intent in = new Intent(ReceiptActivity.this, MainActivity.class);
                 startActivity(in);
                 finish();
             }
@@ -67,8 +68,8 @@ public class ReceiptActivity extends AppCompatActivity {
     }
 
     private void updateFirestore() {
-        for(int i=0;i<selectedEvents.size();i++){
-            for(int j=0;j<selectedEvents.get(i).getSelectedSeats().size();j++){
+        for (int i = 0; i < selectedEvents.size(); i++) {
+            for (int j = 0; j < selectedEvents.get(i).getSelectedSeats().size(); j++) {
                 firestore.collection("events").document(selectedDate).collection(selectedEvents.get(i).getCategory()).document(selectedEvents.get(i).getFirebaseDocName())
                         .update("booked", FieldValue.arrayUnion(selectedEvents.get(i).getSelectedSeats().get(j))).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -78,11 +79,11 @@ public class ReceiptActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "onFailure: "+e.getMessage());
+                                Log.d(TAG, "onFailure: " + e.getMessage());
                             }
                         });
             }
-            if(selectedEvents.get(i).getSelectedSeats().size()!=0){
+            if (selectedEvents.get(i).getSelectedSeats().size() != 0) {
                 firestore.collection("users").document(mUser.getUid()).collection("bookedEvents")
                         .add(selectedEvents.get(i)).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
@@ -111,11 +112,11 @@ public class ReceiptActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        selectedEvents=new ArrayList<>();
-        showsRecyclerView=findViewById(R.id.showsRecyclerView);
+        selectedEvents = new ArrayList<>();
+        showsRecyclerView = findViewById(R.id.showsRecyclerView);
         firestore = FirebaseFirestore.getInstance();
-        btnDone=findViewById(R.id.btnDone);
+        btnDone = findViewById(R.id.btnDone);
         mAuth = FirebaseAuth.getInstance();
-        mUser=mAuth.getCurrentUser();
+        mUser = mAuth.getCurrentUser();
     }
 }

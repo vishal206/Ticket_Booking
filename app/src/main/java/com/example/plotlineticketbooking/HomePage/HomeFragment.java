@@ -19,9 +19,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.plotlineticketbooking.Adapters.ShowsRecyclerViewAdapter;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
@@ -58,13 +60,23 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
     RecyclerView showsRecyclerView;
     ShowsRecyclerViewAdapter showsRecyclerViewAdapter;
     Button btnComedyShows, btnMovies, btnPlays, btnBookTicket;
-    TextView textNotAvailable;
+    TextView textNotAvailable, userName;
+    ImageView profileImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         initializeViews();
+        firestore.collection("users").document(mUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                userName.setText("Welcome,\n" + task.getResult().get("name").toString());
+                String profileURL = task.getResult().get("profilePic").toString();
+
+                Glide.with(getContext()).load(profileURL).into(profileImage);
+            }
+        });
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +163,7 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
     private void initializeViews() {
         dateEditText = view.findViewById(R.id.et_date);
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
         comedyShowsList = new ArrayList<>();
         playsList = new ArrayList<>();
@@ -161,6 +174,8 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
         btnPlays = view.findViewById(R.id.btnPlays);
         btnBookTicket = view.findViewById(R.id.btnBookTicket);
         textNotAvailable = view.findViewById(R.id.textNotAvailable);
+        userName = view.findViewById(R.id.userName);
+        profileImage = view.findViewById(R.id.profileImage);
     }
 
     private void showDatePickerDailog() {
@@ -235,10 +250,10 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
         } else if (selectedShow.equals("plays")) {
             showList = playsList;
         }
-        if(showList.size()==0){
+        if (showList.size() == 0) {
             textNotAvailable.setVisibility(View.VISIBLE);
             showsRecyclerView.setVisibility(View.GONE);
-        }else{
+        } else {
             textNotAvailable.setVisibility(View.GONE);
             showsRecyclerView.setVisibility(View.VISIBLE);
             showsRecyclerViewAdapter = new ShowsRecyclerViewAdapter(getContext(), showList);

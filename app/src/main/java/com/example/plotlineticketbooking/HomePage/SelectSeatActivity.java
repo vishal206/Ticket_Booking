@@ -32,11 +32,11 @@ import java.util.HashMap;
 
 public class SelectSeatActivity extends AppCompatActivity {
 
-    String TAG="selSeat";
+    String TAG = "selSeat";
     public ArrayList<Events> selectedEvents;
     ArrayList<Seats> seatsArrayList;
-    ArrayList<String> bookedSeats,selectedSeats;
-    HashMap<String,Integer> seatNameMap;
+    ArrayList<String> bookedSeats, selectedSeats;
+    HashMap<String, Integer> seatNameMap;
     RecyclerView selectedShowsRecyclerView;
     SelectedShowRecyclerAdapter selectedShowRecyclerAdapter;
     SeatSelectionAdapter seatSelectionAdapter;
@@ -44,7 +44,8 @@ public class SelectSeatActivity extends AppCompatActivity {
     ArrayList<Seats> selectedSeatsList;
     Button btnBookTicket;
     ItemClickListener itemClickListener;
-    int selectedPosition=0;
+    int selectedPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +55,14 @@ public class SelectSeatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
         selectedEvents = (ArrayList<Events>) args.getSerializable("ARRAYLIST");
-        selectedSeats=selectedEvents.get(0).getSelectedSeats();
-        bookedSeats=selectedEvents.get(0).getBookedSeats();
-        itemClickListener=new ItemClickListener() {
+        selectedSeats = selectedEvents.get(0).getSelectedSeats();
+        bookedSeats = selectedEvents.get(0).getBookedSeats();
+        itemClickListener = new ItemClickListener() {
             @Override
             public void onClick(int position) {
-                bookedSeats=selectedEvents.get(position).getBookedSeats();
-                selectedSeats=selectedEvents.get(position).getSelectedSeats();
-                selectedPosition=position;
+                bookedSeats = selectedEvents.get(position).getBookedSeats();
+                selectedSeats = selectedEvents.get(position).getSelectedSeats();
+                selectedPosition = position;
                 setSeats();
             }
         };
@@ -69,14 +70,13 @@ public class SelectSeatActivity extends AppCompatActivity {
         setSeats();
 
 
-
         btnBookTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SelectSeatActivity.this,SeatConfirmationActivity.class);
+                Intent intent = new Intent(SelectSeatActivity.this, SeatConfirmationActivity.class);
                 Bundle args = new Bundle();
-                args.putSerializable("ARRAYLIST",(Serializable)selectedEvents);
-                intent.putExtra("BUNDLE",args);
+                args.putSerializable("ARRAYLIST", (Serializable) selectedEvents);
+                intent.putExtra("BUNDLE", args);
                 startActivity(intent);
             }
         });
@@ -84,13 +84,13 @@ public class SelectSeatActivity extends AppCompatActivity {
 
     private void setSeats() {
         seatsArrayList.clear();
-        int t=0;
-        for(int i=1;i<=10;i++){
-            for(int j=1;j<=15;j++){
-                String name=(char)(64+i)+"";
-                name=name+(j);
-                seatNameMap.put(name,t);
-                Seats seats=new Seats(name,false,false);
+        int t = 0;
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 15; j++) {
+                String name = (char) (64 + i) + "";
+                name = name + (j);
+                seatNameMap.put(name, t);
+                Seats seats = new Seats(name, false, false);
                 seatsArrayList.add(seats);
                 t++;
             }
@@ -100,27 +100,27 @@ public class SelectSeatActivity extends AppCompatActivity {
     }
 
     private void setGridView() {
-        seatSelectionAdapter=new SeatSelectionAdapter(seatsArrayList,this,bookedSeats,selectedEvents.get(selectedPosition),selectedSeats);
+        seatSelectionAdapter = new SeatSelectionAdapter(seatsArrayList, this, bookedSeats, selectedEvents.get(selectedPosition), selectedSeats);
         seatsGridView.setAdapter(seatSelectionAdapter);
 
     }
 
     private void setRecyclerView() {
-        selectedShowRecyclerAdapter = new SelectedShowRecyclerAdapter(SelectSeatActivity.this, selectedEvents,itemClickListener);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SelectSeatActivity.this,RecyclerView.HORIZONTAL,false);
+        selectedShowRecyclerAdapter = new SelectedShowRecyclerAdapter(SelectSeatActivity.this, selectedEvents, itemClickListener);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SelectSeatActivity.this, RecyclerView.HORIZONTAL, false);
         selectedShowsRecyclerView.setLayoutManager(layoutManager);
         selectedShowsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         selectedShowsRecyclerView.setAdapter(selectedShowRecyclerAdapter);
     }
 
     private void initializeViews() {
-        selectedShowsRecyclerView=findViewById(R.id.selectedShowsRecyclerView);
-        seatsGridView=findViewById(R.id.seatsGridView);
-        selectedEvents=new ArrayList<>();
-        seatsArrayList=new ArrayList<>();
-        seatNameMap=new HashMap<>();
-        bookedSeats=new ArrayList<>();
-        selectedSeatsList=new ArrayList<>();
-        btnBookTicket=findViewById(R.id.btnBookTicket);
+        selectedShowsRecyclerView = findViewById(R.id.selectedShowsRecyclerView);
+        seatsGridView = findViewById(R.id.seatsGridView);
+        selectedEvents = new ArrayList<>();
+        seatsArrayList = new ArrayList<>();
+        seatNameMap = new HashMap<>();
+        bookedSeats = new ArrayList<>();
+        selectedSeatsList = new ArrayList<>();
+        btnBookTicket = findViewById(R.id.btnBookTicket);
     }
 }

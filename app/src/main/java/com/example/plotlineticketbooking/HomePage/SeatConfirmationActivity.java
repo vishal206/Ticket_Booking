@@ -25,8 +25,9 @@ public class SeatConfirmationActivity extends AppCompatActivity {
     ArrayList<Events> selectedEvents;
     RecyclerView showsRecyclerView;
     SeatConfirmationAdapter seatConfirmationAdapter;
-    int totalPrice=0;
+    int totalPrice = 0;
     Button btnPay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,20 +38,20 @@ public class SeatConfirmationActivity extends AppCompatActivity {
         Bundle args = intent.getBundleExtra("BUNDLE");
         selectedEvents = (ArrayList<Events>) args.getSerializable("ARRAYLIST");
 
-        for(int i=0;i<selectedEvents.size();i++){
-            totalPrice+=selectedEvents.get(i).getSelectedSeats().size();
+        for (int i = 0; i < selectedEvents.size(); i++) {
+            totalPrice += selectedEvents.get(i).getSelectedSeats().size();
         }
-        totalPrice*=100; //Assuming one ticket is 100Rs for all shows and seats
-        btnPay.setText("Pay-Rs "+totalPrice);
+        totalPrice *= 100; //Assuming one ticket is 100Rs for all shows and seats
+        btnPay.setText("Pay-Rs " + totalPrice);
         setRecyclerView();
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2=new Intent(SeatConfirmationActivity.this,ReceiptActivity.class);
+                Intent intent2 = new Intent(SeatConfirmationActivity.this, ReceiptActivity.class);
                 Bundle args = new Bundle();
-                args.putSerializable("ARRAYLIST",(Serializable)selectedEvents);
-                intent2.putExtra("BUNDLE",args);
+                args.putSerializable("ARRAYLIST", (Serializable) selectedEvents);
+                intent2.putExtra("BUNDLE", args);
                 startActivity(intent2);
             }
         });
@@ -67,8 +68,8 @@ public class SeatConfirmationActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        selectedEvents=new ArrayList<>();
-        showsRecyclerView=findViewById(R.id.showsRecyclerView);
-        btnPay=findViewById(R.id.btnPay);
+        selectedEvents = new ArrayList<>();
+        showsRecyclerView = findViewById(R.id.showsRecyclerView);
+        btnPay = findViewById(R.id.btnPay);
     }
 }

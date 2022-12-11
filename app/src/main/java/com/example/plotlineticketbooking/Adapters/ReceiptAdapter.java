@@ -14,7 +14,7 @@ import com.example.plotlineticketbooking.R;
 
 import java.util.ArrayList;
 
-public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewholder>{
+public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewholder> {
     Context context;
     ArrayList<Events> selectedEvents;
 
@@ -26,20 +26,20 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
     @NonNull
     @Override
     public ReceiptAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.booked_shows_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.booked_shows_list, parent, false);
         return new ReceiptAdapter.Viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReceiptAdapter.Viewholder holder, int position) {
-        Events events=selectedEvents.get(position);
-        ArrayList<String> selectedSeats=events.getSelectedSeats();
+        Events events = selectedEvents.get(position);
+        ArrayList<String> selectedSeats = events.getSelectedSeats();
         holder.showName.setText(events.getName());
-        String seatName="";
-        for(int i=0;i<selectedSeats.size();i++){
-            seatName+=selectedSeats.get(i)+" ";
+        String seatName = "";
+        for (int i = 0; i < selectedSeats.size(); i++) {
+            seatName += selectedSeats.get(i) + " ";
         }
-        holder.showTickets.setText(selectedSeats.size()+" tickets:"+seatName);
+        holder.showTickets.setText(selectedSeats.size() + " tickets:" + seatName);
         holder.bookingStatus.setText("Booked");
         holder.showDate.setText(events.getShowDate());
     }
@@ -50,13 +50,14 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
-        TextView showName,showTickets,bookingStatus,showDate;
+        TextView showName, showTickets, bookingStatus, showDate;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-            bookingStatus=itemView.findViewById(R.id.bookingStatus);
-            showName=itemView.findViewById(R.id.showName);
-            showDate=itemView.findViewById(R.id.showDate);
-            showTickets=itemView.findViewById(R.id.showTickets);
+            bookingStatus = itemView.findViewById(R.id.bookingStatus);
+            showName = itemView.findViewById(R.id.showName);
+            showDate = itemView.findViewById(R.id.showDate);
+            showTickets = itemView.findViewById(R.id.showTickets);
         }
     }
 }

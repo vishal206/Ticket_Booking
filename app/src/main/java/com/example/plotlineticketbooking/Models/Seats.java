@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class Seats implements Parcelable {
     String name;
-    Boolean selected,booked;
+    Boolean selected, booked;
 
     public Seats(String name, Boolean selected, Boolean booked) {
         this.name = name;

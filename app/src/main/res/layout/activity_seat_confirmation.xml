@@ -34,10 +34,10 @@
         android:id="@+id/btnPay"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="Pay"
         android:background="@drawable/primary_custom_button"
-        android:textColor="@color/primaryButtonTextColor"
+        android:text="Pay"
         android:textAllCaps="false"
+        android:textColor="@color/primaryButtonTextColor"
         app:layout_constraintBottom_toTopOf="@+id/guideline29"
         app:layout_constraintEnd_toStartOf="@+id/guideline26"
         app:layout_constraintStart_toStartOf="@+id/guideline25"
@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.051" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline26"
         android:layout_width="wrap_content"

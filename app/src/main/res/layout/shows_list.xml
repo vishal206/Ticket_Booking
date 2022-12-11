@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="5dp"
+    android:background="@drawable/secondary_custom_button"
     android:orientation="vertical"
     android:paddingHorizontal="15dp"
-    android:paddingVertical="15dp"
-    android:background="@drawable/secondary_custom_button"
-    android:layout_marginVertical="5dp">
+    android:paddingVertical="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +23,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp">
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/showName"
                     android:layout_width="match_parent"
@@ -38,7 +40,8 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="Its a show IDK Its a show IDK Its a show"
                     android:textColor="@color/textColor"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/learnMore"
                     android:layout_width="match_parent"
@@ -47,19 +50,20 @@
                     android:fontFamily="@font/roboto_light"
                     android:text="Learn more"
                     android:textColor="@color/primaryColor"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:orientation="horizontal">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSelect"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@drawable/primary_custom_button"
                     android:text="Select"
                     android:textAllCaps="false"
@@ -68,16 +72,17 @@
                     app:layout_constraintEnd_toStartOf="@+id/guideline7"
                     app:layout_constraintStart_toStartOf="@+id/guideline6"
                     app:layout_constraintTop_toTopOf="@+id/guideline16" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRemove"
-                    android:visibility="gone"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@drawable/list_secondary_custom_button"
                     android:text="Remove"
                     android:textAllCaps="false"
                     android:textColor="@color/secondaryButtonTextColor"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/guideline17"
                     app:layout_constraintEnd_toStartOf="@+id/guideline7"
                     app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -86,7 +91,6 @@
 
 
         </LinearLayout>
-
 
 
     </LinearLayout>

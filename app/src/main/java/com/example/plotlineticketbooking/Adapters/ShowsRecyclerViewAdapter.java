@@ -29,14 +29,14 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
     @NonNull
     @Override
     public ShowsRecyclerViewAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.shows_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shows_list, parent, false);
         return new ShowsRecyclerViewAdapter.Viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowsRecyclerViewAdapter.Viewholder holder, int position) {
-        Events events=showsList.get(position);
-        if(events.getSelected()){
+        Events events = showsList.get(position);
+        if (events.getSelected()) {
             holder.btnSelect.setVisibility(View.GONE);
             holder.btnRemove.setVisibility(View.VISIBLE);
         }
@@ -57,7 +57,7 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
                 events.setSelected(false);
             }
         });
-        Log.d("booked", ":"+events.getBookedSeats().size());
+        Log.d("booked", ":" + events.getBookedSeats().size());
     }
 
     @Override
@@ -67,14 +67,15 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
 
     public static class Viewholder extends RecyclerView.ViewHolder {
 
-        Button btnSelect,btnRemove;
-        TextView showName,learnMore;
+        Button btnSelect, btnRemove;
+        TextView showName, learnMore;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-            btnSelect=itemView.findViewById(R.id.btnSelect);
-            btnRemove=itemView.findViewById(R.id.btnRemove);
-            showName=itemView.findViewById(R.id.showName);
-            learnMore=itemView.findViewById(R.id.learnMore);
+            btnSelect = itemView.findViewById(R.id.btnSelect);
+            btnRemove = itemView.findViewById(R.id.btnRemove);
+            showName = itemView.findViewById(R.id.showName);
+            learnMore = itemView.findViewById(R.id.learnMore);
         }
     }
 }

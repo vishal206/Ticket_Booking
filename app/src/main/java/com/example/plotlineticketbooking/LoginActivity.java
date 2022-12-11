@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final int RC_SIGN_IN = 123 ;
+    private static final int RC_SIGN_IN = 123;
     Button btnLogin;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
-        btnLogin=findViewById(R.id.btnLogin);
-        mAuth=FirebaseAuth.getInstance();
+
+        btnLogin = findViewById(R.id.btnLogin);
+        mAuth = FirebaseAuth.getInstance();
         createRequest();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient= GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     @Override
@@ -82,32 +82,33 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Toast.makeText(this, "errormsg:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "errormsg:" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
+
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete( Task<AuthResult> task) {
+                    public void onComplete(Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String uid=user.getUid();
-                            FirebaseFirestore db=FirebaseFirestore.getInstance();
-                            Map<String,Object> userInfo=new HashMap<>();
-                            userInfo.put("name",account.getDisplayName());
-                            userInfo.put("email",account.getEmail());
-                            userInfo.put("profilePic",account.getPhotoUrl());
+                            String uid = user.getUid();
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            Map<String, Object> userInfo = new HashMap<>();
+                            userInfo.put("name", account.getDisplayName());
+                            userInfo.put("email", account.getEmail());
+                            userInfo.put("profilePic", account.getPhotoUrl());
                             db.collection("users").document(uid).set(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onComplete(@NonNull  Task<Void> task) {
-                                    Log.d("msg","data added");
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.d("msg", "data added");
                                 }
                             });
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
 //                            updateUI(user);
                         } else {

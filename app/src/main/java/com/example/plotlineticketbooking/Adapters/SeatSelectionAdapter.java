@@ -22,15 +22,15 @@ public class SeatSelectionAdapter extends BaseAdapter {
     ArrayList<Seats> seatsArrayList;
     Context context;
     LayoutInflater inflater;
-    ArrayList<String> bookedSeats,selectedSeats;
+    ArrayList<String> bookedSeats, selectedSeats;
     Events events;
 
-    public SeatSelectionAdapter(ArrayList<Seats> seatsArrayList, Context context,ArrayList<String> bookedSeats,Events events,ArrayList<String> selectedSeats) {
+    public SeatSelectionAdapter(ArrayList<Seats> seatsArrayList, Context context, ArrayList<String> bookedSeats, Events events, ArrayList<String> selectedSeats) {
         this.seatsArrayList = seatsArrayList;
         this.context = context;
-        this.bookedSeats=bookedSeats;
-        this.events= events;
-        this.selectedSeats=selectedSeats;
+        this.bookedSeats = bookedSeats;
+        this.events = events;
+        this.selectedSeats = selectedSeats;
     }
 
 
@@ -59,33 +59,27 @@ public class SeatSelectionAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.seat_button_list, null);
         }
         Button btnSeat = view.findViewById(R.id.btnSeat);
-        Seats seats=seatsArrayList.get(position);
-        if(bookedSeats.contains(seats.getName())){
+        Seats seats = seatsArrayList.get(position);
+        if (bookedSeats.contains(seats.getName())) {
             seats.setBooked(true);
             btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.booked_seat_button));
         }
-        if(selectedSeats.contains(seats.getName())){
+        if (selectedSeats.contains(seats.getName())) {
             seats.setSelected(true);
             btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.selected_seat_button));
         }
         btnSeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!seats.getBooked()){
-                    if(seats.getSelected()){
-//                        ArrayList<String> selected=events.getSelectedSeats();
-//                        selected.remove(seats.getName());
-//                        events.setSelectedSeats(selected);
+                if (!seats.getBooked()) {
+                    if (seats.getSelected()) {
                         events.getSelectedSeats().remove(seats.getName());
-                        Log.d("seSel", ":"+events.getSelectedSeats().toString()+"-"+seats.getName());
+                        Log.d("seSel", ":" + events.getSelectedSeats().toString() + "-" + seats.getName());
                         seats.setSelected(false);
                         btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.unselected_seat_button));
-                    }else{
-//                        ArrayList<String> selected=events.getSelectedSeats();
-//                        selected.add(seats.getName());
-//                        events.setSelectedSeats(selected);
+                    } else {
                         events.getSelectedSeats().add(seats.getName());
-                        Log.d("seSel2", ":"+events.getSelectedSeats().toString());
+                        Log.d("seSel2", ":" + events.getSelectedSeats().toString());
                         seats.setSelected(true);
                         btnSeat.setBackground(ContextCompat.getDrawable(context, R.drawable.selected_seat_button));
                     }

@@ -2,65 +2,84 @@ package com.example.plotlineticketbooking.BookingPage;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.plotlineticketbooking.Adapters.ReceiptAdapter;
+import com.example.plotlineticketbooking.HomePage.ReceiptActivity;
+import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BookingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class BookingFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public BookingFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BookingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BookingFragment newInstance(String param1, String param2) {
-        BookingFragment fragment = new BookingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    private FirebaseFirestore firestore;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    ArrayList<Events> bookedEvents;
+    RecyclerView showsRecyclerView;
+    ReceiptAdapter receiptAdapter;
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_booking, container, false);
+        view= inflater.inflate(R.layout.fragment_booking, container, false);
+
+        initializeViews();
+        getBookedEvents();
+        return view;
+    }
+
+    private void getBookedEvents() {
+        firestore.collection("users").document(mUser.getUid()).collection("bookedEvents")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<DocumentSnapshot> docList=task.getResult().getDocuments();
+                        for(DocumentSnapshot doc:docList){
+                            ArrayList<String> booked=(ArrayList<String>)doc.get("booked");
+                            ArrayList<String> selected=(ArrayList<String>)doc.get("selectedSeats");
+                            Events events=new Events(doc.get("name").toString(), doc.get("description").toString(),
+                                    doc.get("category").toString(), doc.get("duration").toString(),
+                                    false,booked,selected,doc.get("showDate").toString(),doc.getId());
+                            bookedEvents.add(events);
+                        }
+                        setRecyclerView();
+                    }
+                });
+    }
+
+    private void setRecyclerView() {
+        receiptAdapter = new ReceiptAdapter(getContext(), bookedEvents);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        showsRecyclerView.setLayoutManager(layoutManager);
+        showsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        showsRecyclerView.setAdapter(receiptAdapter);
+    }
+
+    private void initializeViews() {
+        firestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUser=mAuth.getCurrentUser();
+        showsRecyclerView=view.findViewById(R.id.showsRecyclerView);
+        bookedEvents=new ArrayList<>();
     }
 }

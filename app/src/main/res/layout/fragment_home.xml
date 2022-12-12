@@ -57,7 +57,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:gravity="start"
-
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/primary_custom_button" />
     </androidx.cardview.widget.CardView>
 

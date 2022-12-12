@@ -1,6 +1,8 @@
 package com.example.plotlineticketbooking.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.plotlineticketbooking.HomePage.LearnMoreActivity;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,6 +73,17 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
                 holder.btnRemove.setVisibility(View.GONE);
                 holder.btnSelect.setVisibility(View.VISIBLE);
                 events.setSelected(false);
+            }
+        });
+        holder.learnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, LearnMoreActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("ARRAYLIST", (Serializable) showsList);
+                intent.putExtra("BUNDLE", args);
+                intent.putExtra("position",position+"");
+                context.startActivity(intent);
             }
         });
         Log.d("booked", ":" + events.getBookedSeats().size());

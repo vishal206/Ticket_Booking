@@ -105,6 +105,7 @@
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatButton
+
             android:id="@+id/btnCancelBooking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -112,6 +113,17 @@
             android:background="@drawable/list_secondary_custom_button"
             android:text="Cancel Booking"
             android:textAllCaps="false"
+            android:textColor="@color/textColor"/>
+        <TextView
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:id="@+id/tvLate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Hope you enjoyed the show!"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="14dp"
+            android:gravity="center_vertical"
             android:textColor="@color/textColor"/>
 
     </LinearLayout>

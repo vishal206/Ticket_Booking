@@ -65,6 +65,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:orientation="horizontal">
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvLate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="You're too late : ("
+                    android:fontFamily="@font/roboto_light"
+                    android:textSize="14dp"
+                    android:textColor="@color/textColor"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSelect"

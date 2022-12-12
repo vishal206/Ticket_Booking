@@ -119,7 +119,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="Shows Not Available on this day \n ( try 9-11-2022 )"
+        android:text="Shows Not Available on this day \n ( try 9,12,13,14 NOV )"
         android:textColor="@color/textColor"
         android:textSize="20dp"
         android:gravity="center"

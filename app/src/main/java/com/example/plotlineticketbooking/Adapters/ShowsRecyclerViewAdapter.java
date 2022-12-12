@@ -16,7 +16,9 @@ import com.bumptech.glide.Glide;
 import com.example.plotlineticketbooking.Models.Events;
 import com.example.plotlineticketbooking.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecyclerViewAdapter.Viewholder> {
 
@@ -37,6 +39,9 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ShowsRecyclerViewAdapter.Viewholder holder, int position) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        String todayDate = formatter.format(date);
         Events events = showsList.get(position);
         if (events.getSelected()) {
             holder.btnSelect.setVisibility(View.GONE);
@@ -44,6 +49,12 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
         }
         holder.showName.setText(events.getName());
         Glide.with(context).load(events.getShowPic()).into(holder.showImage);
+        Log.d("showDate", ": "+todayDate+"//"+events.getShowDate());
+        if(todayDate.compareTo(events.getShowDate())>0){
+            holder.btnSelect.setVisibility(View.GONE);
+            holder.btnRemove.setVisibility(View.GONE);
+            holder.tvLate.setVisibility(View.VISIBLE);
+        }
         holder.btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +82,7 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
     public static class Viewholder extends RecyclerView.ViewHolder {
 
         Button btnSelect, btnRemove;
-        TextView showName, learnMore;
+        TextView showName, learnMore,tvLate;
         ImageView showImage;
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +91,7 @@ public class ShowsRecyclerViewAdapter extends RecyclerView.Adapter<ShowsRecycler
             showName = itemView.findViewById(R.id.showName);
             learnMore = itemView.findViewById(R.id.learnMore);
             showImage=itemView.findViewById(R.id.showImage);
+            tvLate=itemView.findViewById(R.id.tvLate);
         }
     }
 }

@@ -191,7 +191,11 @@ public class HomeFragment extends Fragment implements DatePickerDialog.OnDateSet
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         month++;
-        selectedDate = dayOfMonth + "-" + month + "-" + year;
+        String day=""+dayOfMonth;
+        if(dayOfMonth/10==0){
+            day="0"+day;
+        }
+        selectedDate = day + "-" + month + "-" + year;
         dateEditText.setText(selectedDate);
         getEvents();
     }

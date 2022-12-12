@@ -26,7 +26,9 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewholder> {
@@ -48,7 +50,17 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
 
     @Override
     public void onBindViewHolder(@NonNull ReceiptAdapter.Viewholder holder, int position) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        String todayDate = formatter.format(date);
         Events events = selectedEvents.get(position);
+        if(todayDate.compareTo(events.getShowDate())>0){
+            holder.btnCancelBooking.setVisibility(View.GONE);
+            holder.bookingStatus.setText("Watched");
+            holder.tvLate.setVisibility(View.VISIBLE);
+        }else{
+            holder.bookingStatus.setText("Booked");
+        }
         ArrayList<String> selectedSeats = events.getSelectedSeats();
         holder.showName.setText(events.getName());
         String seatName = "";
@@ -56,7 +68,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
             seatName += selectedSeats.get(i) + " ";
         }
         holder.showTickets.setText(selectedSeats.size() + " tickets:" + seatName);
-        holder.bookingStatus.setText("Booked");
+
         holder.showDate.setText(events.getShowDate());
         Glide.with(context).load(events.getShowPic()).into(holder.showImage);
 
@@ -120,7 +132,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
-        TextView showName, showTickets, bookingStatus, showDate;
+        TextView showName, showTickets, bookingStatus, showDate,tvLate;
         Button btnCancelBooking;
         ImageView showImage;
 
@@ -132,6 +144,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.Viewhold
             showTickets = itemView.findViewById(R.id.showTickets);
             btnCancelBooking=itemView.findViewById(R.id.btnCancelBooking);
             showImage=itemView.findViewById(R.id.showImage);
+            tvLate=itemView.findViewById(R.id.tvLate);
         }
     }
 }
